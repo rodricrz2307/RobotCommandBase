@@ -7,7 +7,7 @@ import frc.robot.Mechanisms.OutakeSub;
     
 public class OutakeCommands extends Command {
 
-    private final OutakeSub OutakeSub;
+    private final OutakeSub outakeSub;
     private final double speed;
 
    public OutakeCommands (OutakeSub outakeSub, double speed) {
