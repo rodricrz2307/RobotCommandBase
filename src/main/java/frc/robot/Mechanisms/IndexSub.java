@@ -18,6 +18,15 @@ public class ExampleSubsystem extends SubsystemBase {
     private final VelocityVoltage velocityControl = new VelocityVoltage(0.00);
     private final PositionVoltage position = new PositionVoltage(00);
 
+  public void eat(double speed) {
+        motor_rollersFx.set(speed);
+      }
+
+      public void desatasco(double speed){
+        motor_rollersFx.set(speed);
+      }
+
+
 
   /**
    * Example command factory method.
