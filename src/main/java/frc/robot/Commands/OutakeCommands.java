@@ -4,9 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Mechanisms.IntakeSub;
 import frc.robot.Mechanisms.OutakeSub;
-
-
-public class OutakeCommands{
     
 public class OutakeCommands extends Command {
 
