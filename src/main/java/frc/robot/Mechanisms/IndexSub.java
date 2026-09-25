@@ -14,7 +14,7 @@ public class ExampleSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
 
-    private public TalonFX motor_rollersFx = new TalonFX(0);
+    private final TalonFX motor_rollersFx = new TalonFX(0);
     private final VelocityVoltage velocityControl = new VelocityVoltage(0.00);
     private final PositionVoltage position = new PositionVoltage(00);
 
