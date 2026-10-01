@@ -1,64 +1,16 @@
-package frc.robot.subsystems;
+package frc.robot.Mechanisms;
 
-import com.ctre.phoenix6.CANBus;
-import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.VelocityVoltage;
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 
-import edu.wpi.first.units.measure.Velocity;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+public class MechanismsConstants {
+    public static final class IndexConstants {
+        public static final int roller1Id = 15;
+        public static final int roller2Id = 16;
 
-public class ExampleSubsystem extends SubsystemBase {
+        public static final InvertedValue rollersInversion = InvertedValue.Clockwise_Positive;
 
-  /** Creates a new ExampleSubsystem. */
-
-
-    private final TalonFX motor_rollersFx = new TalonFX(0);
-    private final VelocityVoltage velocityControl = new VelocityVoltage(0.00);
-    private final PositionVoltage position = new PositionVoltage(00);
-
-  public void eat(double speed) {
-        motor_rollersFx.set(speed);
-      }
-
-      public void desatasco(double speed){
-        motor_rollersFx.set(speed);
-      }
-
-
-
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
-
-  /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
-   *
-   * @return value of some boolean subsystem state, such as a digital sensor.
-   */
-  public boolean exampleCondition() {
-    // Query some boolean state, such as a digital sensor.
-    return false;
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
+        public static final double kP = 0.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
     }
+}
