@@ -37,7 +37,7 @@ public class IntakeboxConstants {
 
   public static final class OutakeConstants {
 
-        public static final int shooterLeftId = 22;
+        public static final int shooterLeftId = 22;     //Recordatorio para modificar los Id
         public static final int shooterRightId = 23;
         public static final int hoodId = 24;
         public static final InvertedValue shooterLeftInversion = InvertedValue.CounterClockwise_Positive;
