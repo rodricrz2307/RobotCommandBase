@@ -2,31 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Mechanisms.Rollers;
 
-public class IndexCommands extends Command {
+public class IndexCommands {
 
-    private final IndexSub indexSub;
-    private final double speed;
+    public static Command startRollers(Rollers rollers){
+        return Commands.runOnce(() -> rollers.setrollersPositionVoltage(0) ,rollers);
+    }
 
-  public IndexCommands(IndexSub indexSub, double speed){
-    this.indexSub = indexSub;
-    this.speed = speed;
-    addRequirements(indexSub);
-
-  }
-
-  @Override
-  public void eat() {
-
-    indexSub.setRollerSpeed(3);
-
-  }
-
-  @Override
-  public void desatasco(){
-    indexSub.setRollerSpeed(-3);
-  }
-
+    public static Command stopRollers(Rollers rollers){
+        return Commands.runOnce(() -> rollers.setrollersPositionVoltage(-0.25),rollers);
+    }
 
 }
-
