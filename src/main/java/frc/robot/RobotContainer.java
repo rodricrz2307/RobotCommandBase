@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 
@@ -18,6 +14,10 @@ import frc.robot.DriveTrain.CommandSwerveDrivetrain;
 import frc.robot.DriveTrain.SwerveConstants;
 import frc.robot.Mechanisms.IndexSub;
 import frc.robot.Mechanisms.IntakeSub;
+import frc.robot.Commands.IndexCommands;
+import frc.robot.Commands.OutakeCommands;
+import frc.robot.Mechanisms.MechanismsConstants.ShootContants;
+import frc.robot.Mechanisms.OutakeSub;
 
 public class RobotContainer {
 
@@ -85,6 +85,12 @@ public class RobotContainer {
             .withTargetDirection(Rotation2d.fromDegrees(0))
     )
 );
+
+        joystick.rightTrigger().whileTrue(OutakeCommands.shoot(outake, IndexCommands.feed(flywheels),
+                ShootContants.shooterCloseRPS, ShootContants.hoodClose));
+
+        joystick.rightBumper().whileTrue(OutakeCommands.shoot(outake, IndexCommands.feed(flywheels),
+                ShootContants.shooterFarRPS, ShootContants.hoodFar));
     }
 
   public Command getAutonomousCommand() {
