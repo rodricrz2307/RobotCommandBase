@@ -82,6 +82,12 @@ public class MechanismsConstants {
     public static class IndexConstants {
 
         public static final int index_motor_id = 0;
+        public static final int roller1Id = 30;
+        public static final int roller2Id = 31;
+        public static final InvertedValue rollersInversion = InvertedValue.CounterClockwise_Positive;
+
+        public static final double intakeSpeed = 0.4;
+        public static final double feedSpeed = 1.0;
 
         public static final double kP = 0.0;
         public static final double kI = 0.0;
