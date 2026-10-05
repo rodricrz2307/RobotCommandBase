@@ -6,11 +6,11 @@ import frc.robot.Mechanisms.Rollers;
 
 public class IndexCommands {
 
-    public static Command startRollers(Rollers rollers){
+    public static Command startRollers(Mechanisms_Rollers_Index rollers){
         return Commands.runOnce(() -> rollers.setrollersPositionVoltage(0) ,rollers);
     }
 
-    public static Command stopRollers(Rollers rollers){
+    public static Command stopRollers(Mechanisms_Rollers_Index rollers){
         return Commands.runOnce(() -> rollers.setrollersPositionVoltage(-0.25),rollers);
     }
 
