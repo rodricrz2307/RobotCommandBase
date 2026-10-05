@@ -13,5 +13,11 @@ public class IndexCommands {
     public static Command stopRollers(Mechanisms_Rollers_Index rollers){
         return Commands.runOnce(() -> rollers.setrollersPositionVoltage(-0.25),rollers);
     }
-
+    
+public static Command feed(Rollers rollers) {
+        return Commands.startEnd(
+                () -> rollers.setSpeed(IndexConstants.feedSpeed),
+                rollers::stopRollers,
+                rollers);
+    }
 }
