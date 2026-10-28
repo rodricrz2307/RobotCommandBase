@@ -7,7 +7,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.DriveTrain.CommandSwerveDrivetrain;
 import frc.robot.DriveTrain.SwerveConstants;
@@ -99,6 +98,7 @@ public class RobotContainer {
 
         joystick.rightBumper().whileTrue(OutakeCommands.shoot(outake, IndexCommands.feed(flywheels),
                 ShootContants.shooterFarRPS, ShootContants.hoodFar));
+
         joystick.leftTrigger().whileTrue(intake.runIntakeCommand(IntakeConstants.intakeSpeed));
         joystick.leftBumper().whileTrue(intake.runIntakeCommand(-IntakeConstants.intakeSpeed));
     }
