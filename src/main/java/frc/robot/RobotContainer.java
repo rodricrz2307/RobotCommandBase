@@ -1,9 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
-
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -12,12 +7,16 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.DriveTrain.CommandSwerveDrivetrain;
 import frc.robot.DriveTrain.SwerveConstants;
-import frc.robot.Mechanisms.IndexSub;
+import frc.robot.Mechanisms.Rollers; 
 import frc.robot.Mechanisms.IntakeSub;
+import frc.robot.Commands.IndexCommands;
+import frc.robot.Commands.OutakeCommands;
+import frc.robot.Mechanisms.MechanismsConstants.IntakeConstants; 
+import frc.robot.Mechanisms.MechanismsConstants.ShootContants;
+import frc.robot.Mechanisms.OutakeSub;
 
 public class RobotContainer {
 
@@ -34,7 +33,7 @@ public class RobotContainer {
   
 
   private final OutakeSub outake = new OutakeSub();
-  private final IndexSub flywheels = new IndexSub();
+  private final Rollers flywheels = new Rollers();
   private final IntakeSub intake = new IntakeSub();
 
   private final SendableChooser<Command> autoChooser;
@@ -49,9 +48,17 @@ public class RobotContainer {
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
   public RobotContainer() {
+    driveFacingAngle.HeadingController.setPID(5.0, 0.0, 0.0);
+    driveFacingAngle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
+
     configureBindings();
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    drivetrain.configurarPathPlanner();
+    if (AutoBuilder.isConfigured()) {
+      autoChooser = AutoBuilder.buildAutoChooser();
+    } else {
+      autoChooser = new SendableChooser<>();
+    }
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
@@ -80,14 +87,23 @@ public class RobotContainer {
         joystick.b().whileTrue(
         drivetrain.applyRequest(() ->
         driveFacingAngle
-            .withVelocityX(-joystick.getLeftY())
-            .withVelocityY(-joystick.getLeftX())
+            .withVelocityX(-joystick.getLeftY() * SwerveConstants.kVelLinearMax)
+            .withVelocityY(-joystick.getLeftX() * SwerveConstants.kVelLinearMax)
             .withTargetDirection(Rotation2d.fromDegrees(0))
     )
 );
+
+        joystick.rightTrigger().whileTrue(OutakeCommands.shoot(outake, IndexCommands.feed(flywheels),
+                ShootContants.shooterCloseRPS, ShootContants.hoodClose));
+
+        joystick.rightBumper().whileTrue(OutakeCommands.shoot(outake, IndexCommands.feed(flywheels),
+                ShootContants.shooterFarRPS, ShootContants.hoodFar));
+
+        joystick.leftTrigger().whileTrue(intake.runIntakeCommand(IntakeConstants.intakeSpeed));
+        joystick.leftBumper().whileTrue(intake.runIntakeCommand(-IntakeConstants.intakeSpeed));
     }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser.getSelected();
   }
 }
