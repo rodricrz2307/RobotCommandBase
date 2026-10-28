@@ -1,7 +1,5 @@
 package frc.robot.Mechanisms;
 
-import java.io.ObjectInputFilter.Config;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 
