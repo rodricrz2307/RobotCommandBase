@@ -4,10 +4,11 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.StaticBrake;
+import com.ctre.phoenix6.controls.VoltageOut; 
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//krakenx60
+
 public class Rollers extends SubsystemBase {
     public final TalonFX rollers = new TalonFX(MechanismsConstants.IndexConstants.roller1Id);
     public final TalonFX rollers2 = new TalonFX(MechanismsConstants.IndexConstants.roller2Id);
@@ -32,8 +33,8 @@ public class Rollers extends SubsystemBase {
     }
 
     public void applyVoltage(double voltage) {
-        rollers.setControl(new DutyCycleOut(voltage));
-        rollers2.setControl(new DutyCycleOut(voltage));
+        rollers.setControl(new VoltageOut(voltage));
+        rollers2.setControl(new VoltageOut(voltage));
     }
     public void stopRollers() {
         rollers.setControl(new NeutralOut());
@@ -44,7 +45,7 @@ public class Rollers extends SubsystemBase {
         rollers2.setControl(new StaticBrake());
     }
     public Object setrollersPositionVoltage(double d) {
-        // TODO Auto-generated method stub
+       
         throw new UnsupportedOperationException("Unimplemented method 'setrollersPositionVoltage'");
     }
 }
