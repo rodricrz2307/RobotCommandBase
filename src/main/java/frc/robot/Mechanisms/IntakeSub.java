@@ -13,8 +13,6 @@ public class IntakeSub extends SubsystemBase {
     private final TalonFX intakeMotor = new TalonFX(IntakeConstants.intakeId);
     private final TalonFX intakeboxMotor = new TalonFX(IntakeboxConstants.intakeboxId);
 
-
-    //faltan las constantes
     public IntakeSub() {
         TalonFXConfiguration intakeMotorConfig = new TalonFXConfiguration();
         intakeMotorConfig.MotorOutput.Inverted = IntakeConstants.intakeInversion;
@@ -26,7 +24,7 @@ public class IntakeSub extends SubsystemBase {
         intakeMotorConfig.Slot0.kV = IntakeConstants.kV;
         intakeMotorConfig.Slot0.kA = IntakeConstants.kA;
         intakeMotor.getConfigurator().apply(intakeMotorConfig);
-        //checar applyConfig, actuators?
+     
 
         TalonFXConfiguration intakeboxMotorConfig = new TalonFXConfiguration();
         intakeboxMotorConfig.MotorOutput.Inverted = IntakeboxConstants.intakeboxInversion;
@@ -65,4 +63,5 @@ public class IntakeSub extends SubsystemBase {
     @Override
     public void periodic() {
     }
+
 }
