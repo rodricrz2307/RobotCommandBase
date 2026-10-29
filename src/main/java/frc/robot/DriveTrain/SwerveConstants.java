@@ -1,10 +1,13 @@
 package frc.robot.DriveTrain;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
+import com.ctre.phoenix6.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstantsFactory;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -17,8 +20,8 @@ public class SwerveConstants {
 
     public static final SwerveDriveKinematics ObjCinematico = new SwerveDriveKinematics(
         new Translation2d( distancia_modulos/2.0,  distancia_modulos/2.0), // Frente izq
-        new Translation2d( -distancia_modulos/2.0,  distancia_modulos/2.0), // Frente der
-        new Translation2d( distancia_modulos/2.0,  -distancia_modulos/2.0), // Atras izq
+        new Translation2d( distancia_modulos/2.0,  -distancia_modulos/2.0), // Frente der
+        new Translation2d( -distancia_modulos/2.0,  distancia_modulos/2.0), // Atras izq
         new Translation2d( -distancia_modulos/2.0,  -distancia_modulos/2.0) // Atras der
     );
 
@@ -34,8 +37,8 @@ public class SwerveConstants {
 
     // PID direccion
     public static final double kHeadingP = 1;
-    public static final double kHeadingI = 1;
-    public static final double kHeadingD = 1;
+    public static final double kHeadingI = 0;
+    public static final double kHeadingD = 0;
 
     public static final SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
         .withPigeon2Id(13)
@@ -48,13 +51,15 @@ public class SwerveConstants {
     private static final Slot0Configs steerGains = new Slot0Configs()
         .withKP(100.0).withKI(0.0).withKD(0.5);
 
-    private static final SwerveModuleConstantsFactory<Slot0Configs, Slot0Configs, Slot0Configs> ConstantCreator = 
-        new SwerveModuleConstantsFactory<Slot0Configs, Slot0Configs, Slot0Configs>()
+    private static final SwerveModuleConstantsFactory<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> ConstantCreator =
+        new SwerveModuleConstantsFactory<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>()
             .withDriveMotorGearRatio(6.12)       // Relación de engranajes de tracción (ejemplo SDS L3)
             .withSteerMotorGearRatio(12.8)       // Relación de engranajes de dirección
             .withWheelRadius(0.0508)             // Radio de la rueda en metros (2 pulgadas)
             .withDriveMotorGains(driveGains)
-            .withSteerMotorGains(steerGains);
+            .withSteerMotorGains(steerGains)
+            .withSpeedAt12Volts(kVelLinearMax)                     // Velocidad maxima a 12V (m/s)
+            .withFeedbackSource(SteerFeedbackType.RemoteCANcoder); // FusedCANcoder requiere Phoenix Pro
 
 
     public static final SwerveModuleConstants<?, ?, ?> FrontLeft = ConstantCreator.createModuleConstants(

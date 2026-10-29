@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 public class MechanismsConstants {
 
-    public class IntakeConstants {
+    public static class IntakeConstants {
 
         public static final int intakeId = 10;
 
@@ -22,7 +22,7 @@ public class MechanismsConstants {
         public static final double kA = 0.0;
     }
 
-    public class IntakeboxConstants {
+    public static class IntakeboxConstants {
 
         public static final int intakeboxId = 11;
 

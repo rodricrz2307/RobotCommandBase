@@ -19,9 +19,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-import frc.robot.DriveTrain.SwerveConstants;
-
-public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
+public class CommandSwerveDrivetrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
 
     private final PIDController pidAngulo = new PIDController(
         SwerveConstants.kHeadingP, 
@@ -34,7 +32,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public CommandSwerveDrivetrain(
         SwerveDrivetrainConstants constantesDeManejo,
-        SwerveModuleConstants... modulos
+        SwerveModuleConstants<?, ?, ?>... modulos
     ) {
         super(
             TalonFX::new, TalonFX::new, CANcoder::new, 
