@@ -41,7 +41,7 @@ public class SwerveConstants {
     public static final double kHeadingD = 0;
 
     public static final SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
-        .withPigeon2Id(13)
+        .withPigeon2Id(25)
         .withCANBusName("rio");
 
     private static final Slot0Configs driveGains = new Slot0Configs()
@@ -63,8 +63,8 @@ public class SwerveConstants {
 
 
     public static final SwerveModuleConstants<?, ?, ?> FrontLeft = ConstantCreator.createModuleConstants(
-        1,                           // Steer Motor CAN ID
-        2,                           // Drive Motor CAN ID
+        8,                           // Steer Motor CAN ID
+        7,                           // Drive Motor CAN ID
         1,                              // CANcoder CAN ID
         0.0,                        // Magnet Offset (rotaciones)
         distancia_modulos / 2.0,                  // Posicion x
@@ -75,19 +75,19 @@ public class SwerveConstants {
     );
 
     public static final SwerveModuleConstants<?, ?, ?> FrontRight = ConstantCreator.createModuleConstants(
-        3, 4, 2, 0.0, 
+        6, 5, 2, 0.0,
         distancia_modulos / 2.0, -distancia_modulos / 2.0, 
         false, false, false
     );
 
     public static final SwerveModuleConstants<?, ?, ?> BackLeft = ConstantCreator.createModuleConstants(
-        5, 6, 3, 0.0, 
+        4, 3, 3, 0.0,
         -distancia_modulos / 2.0, distancia_modulos / 2.0, 
         false, false, false
     );
 
     public static final SwerveModuleConstants<?, ?, ?> BackRight = ConstantCreator.createModuleConstants(
-        7, 8, 4, 0.0, 
+        2, 1, 4, 0.0,
         -distancia_modulos / 2.0, -distancia_modulos / 2.0, 
         false, false, false
     );

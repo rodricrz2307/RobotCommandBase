@@ -1,10 +1,15 @@
 package frc.robot.Mechanisms;
  
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
  
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,10 +20,9 @@ public class OutakeSub extends SubsystemBase {
  
     private final TalonFX shooterLeft = new TalonFX(OutakeConstants.shooterLeftId);
     private final TalonFX shooterRight = new TalonFX(OutakeConstants.shooterRightId);
-    private final TalonFX hood = new TalonFX(OutakeConstants.hoodId);
- 
+    private final SparkMax hood = new SparkMax(OutakeConstants.hoodId, MotorType.kBrushless);
+
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
-    private final PositionVoltage hoodRequest = new PositionVoltage(0);
  
     private double targetRPS = 0;
     private double targetHood = 0;
@@ -39,19 +43,13 @@ public class OutakeSub extends SubsystemBase {
         shooterConfig.MotorOutput.Inverted = OutakeConstants.shooterRightInversion;
         shooterRight.getConfigurator().apply(shooterConfig);
  
-        TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
-        hoodConfig.Slot0.kP = OutakeConstants.hoodkP;
-        hoodConfig.Slot0.kI = OutakeConstants.hoodkI;
-        hoodConfig.Slot0.kD = OutakeConstants.hoodkD;
-        hoodConfig.Slot0.kS = OutakeConstants.hoodkS;
-        hoodConfig.Slot0.kG = OutakeConstants.hoodkG;
-        hoodConfig.Slot0.kV = OutakeConstants.hoodkV;
-        hoodConfig.Slot0.kA = OutakeConstants.hoodkA;
-        hoodConfig.MotorOutput.Inverted = OutakeConstants.hoodInversion;
-        hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
- 
-        hood.getConfigurator().apply(hoodConfig);
-        hood.setPosition(0);
+        SparkMaxConfig hoodConfig = new SparkMaxConfig();
+        hoodConfig.closedLoop.pid(OutakeConstants.hoodkP, OutakeConstants.hoodkI, OutakeConstants.hoodkD);
+        hoodConfig.inverted(OutakeConstants.hoodInverted);
+        hoodConfig.idleMode(IdleMode.kBrake);
+
+        hood.configure(hoodConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        hood.getEncoder().setPosition(0);
     }
  
     public void setSpeed(double rps) {
@@ -62,13 +60,13 @@ public class OutakeSub extends SubsystemBase {
  
     public void setHood(double position) {
         targetHood = MathUtil.clamp(position, OutakeConstants.hoodMinPosition, OutakeConstants.hoodMaxPosition);
-        hood.setControl(hoodRequest.withPosition(targetHood));
+        hood.getClosedLoopController().setSetpoint(targetHood, ControlType.kPosition);
     }
  
     public boolean isReady() {
         double leftError = Math.abs(shooterLeft.getVelocity().getValueAsDouble() - targetRPS);
         double rightError = Math.abs(shooterRight.getVelocity().getValueAsDouble() - targetRPS);
-        double hoodError = Math.abs(hood.getPosition().getValueAsDouble() - targetHood);
+        double hoodError = Math.abs(hood.getEncoder().getPosition() - targetHood);
         return targetRPS > 0
                 && leftError < ShootContants.shooterTolerance
                 && rightError < ShootContants.shooterTolerance
