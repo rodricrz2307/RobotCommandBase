@@ -42,8 +42,8 @@ public class RobotContainer {
   private final SwerveRequest.FieldCentricFacingAngle driveFacingAngle = new SwerveRequest.FieldCentricFacingAngle();
 
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-        .withDeadband(0.1)
-        .withRotationalDeadband(0.1);
+        .withDeadband(SwerveConstants.kVelLinearMax * 0.1)
+        .withRotationalDeadband(SwerveConstants.kVelAngularMax * 0.1);
 
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
