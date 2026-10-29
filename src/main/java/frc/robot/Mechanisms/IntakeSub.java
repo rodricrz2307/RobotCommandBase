@@ -64,7 +64,3 @@ public class IntakeSub extends SubsystemBase {
     public void periodic() {
     }
 }
-    @Override
-    public void periodic() {
-    }
-}
