@@ -1,51 +1,55 @@
 package frc.robot.Mechanisms;
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.NeutralOut;
-import com.ctre.phoenix6.controls.StaticBrake;
-import com.ctre.phoenix6.controls.VoltageOut; 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Rollers extends SubsystemBase {
-    public final TalonFX rollers = new TalonFX(MechanismsConstants.IndexConstants.roller1Id);
-    public final TalonFX rollers2 = new TalonFX(MechanismsConstants.IndexConstants.roller2Id);
+    public final SparkMax rollers = new SparkMax(MechanismsConstants.IndexConstants.roller1Id, MotorType.kBrushless);
+    public final SparkMax rollers2 = new SparkMax(MechanismsConstants.IndexConstants.roller2Id, MotorType.kBrushless);
     public Rollers(){
-        TalonFXConfiguration roller1Configuration = new TalonFXConfiguration();
-        roller1Configuration.MotorOutput.Inverted = MechanismsConstants.IndexConstants.rollersInversion;
-        roller1Configuration.Slot0.kP = MechanismsConstants.IndexConstants.kP;
-        roller1Configuration.Slot0.kI = MechanismsConstants.IndexConstants.kI;
-        roller1Configuration.Slot0.kD = MechanismsConstants.IndexConstants.kD;
-        rollers.getConfigurator().apply(roller1Configuration);
+        SparkMaxConfig roller1Configuration = new SparkMaxConfig();
+        roller1Configuration.inverted(MechanismsConstants.IndexConstants.rollersInverted);
+        roller1Configuration.idleMode(IdleMode.kCoast);
+        roller1Configuration.closedLoop.pid(
+                MechanismsConstants.IndexConstants.kP,
+                MechanismsConstants.IndexConstants.kI,
+                MechanismsConstants.IndexConstants.kD);
+        rollers.configure(roller1Configuration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        TalonFXConfiguration roller2Configuration = new TalonFXConfiguration();
-        roller2Configuration.MotorOutput.Inverted = MechanismsConstants.IndexConstants.rollersInversion;
-        roller2Configuration.Slot0.kP = MechanismsConstants.IndexConstants.kP;
-        roller2Configuration.Slot0.kI = MechanismsConstants.IndexConstants.kI;
-        roller2Configuration.Slot0.kD = MechanismsConstants.IndexConstants.kD;
-        rollers2.getConfigurator().apply(roller2Configuration);
+        SparkMaxConfig roller2Configuration = new SparkMaxConfig();
+        roller2Configuration.inverted(MechanismsConstants.IndexConstants.rollersInverted);
+        roller2Configuration.idleMode(IdleMode.kCoast);
+        roller2Configuration.closedLoop.pid(
+                MechanismsConstants.IndexConstants.kP,
+                MechanismsConstants.IndexConstants.kI,
+                MechanismsConstants.IndexConstants.kD);
+        rollers2.configure(roller2Configuration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
         public void setSpeed(double speed) {
-        rollers.setControl(new DutyCycleOut(speed));
-        rollers2.setControl(new DutyCycleOut(speed));   
+        rollers.set(speed);
+        rollers2.set(speed);
     }
 
     public void applyVoltage(double voltage) {
-        rollers.setControl(new VoltageOut(voltage));
-        rollers2.setControl(new VoltageOut(voltage));
+        rollers.setVoltage(voltage);
+        rollers2.setVoltage(voltage);
     }
     public void stopRollers() {
-        rollers.setControl(new NeutralOut());
-        rollers2.setControl(new NeutralOut());
+        rollers.stopMotor();
+        rollers2.stopMotor();
     }
     public void breakRollers() {
-        rollers.setControl(new StaticBrake());
-        rollers2.setControl(new StaticBrake());
+        rollers.stopMotor();
+        rollers2.stopMotor();
     }
     public Object setrollersPositionVoltage(double d) {
-       
+
         throw new UnsupportedOperationException("Unimplemented method 'setrollersPositionVoltage'");
     }
 }

@@ -2,6 +2,11 @@ package frc.robot.Mechanisms;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,7 +16,7 @@ import frc.robot.Mechanisms.MechanismsConstants.IntakeboxConstants;
 public class IntakeSub extends SubsystemBase {
 
     private final TalonFX intakeMotor = new TalonFX(IntakeConstants.intakeId);
-    private final TalonFX intakeboxMotor = new TalonFX(IntakeboxConstants.intakeboxId);
+    private final SparkMax intakeboxMotor = new SparkMax(IntakeboxConstants.intakeboxId, MotorType.kBrushless);
 
     public IntakeSub() {
         TalonFXConfiguration intakeMotorConfig = new TalonFXConfiguration();
@@ -26,16 +31,10 @@ public class IntakeSub extends SubsystemBase {
         intakeMotor.getConfigurator().apply(intakeMotorConfig);
      
 
-        TalonFXConfiguration intakeboxMotorConfig = new TalonFXConfiguration();
-        intakeboxMotorConfig.MotorOutput.Inverted = IntakeboxConstants.intakeboxInversion;
-        intakeboxMotorConfig.Slot0.kP = IntakeboxConstants.kP;
-        intakeboxMotorConfig.Slot0.kI = IntakeboxConstants.kI;
-        intakeboxMotorConfig.Slot0.kD = IntakeboxConstants.kD;   
-        intakeboxMotorConfig.Slot0.kS = IntakeboxConstants.kS;
-        intakeboxMotorConfig.Slot0.kG = IntakeboxConstants.kG;
-        intakeboxMotorConfig.Slot0.kV = IntakeboxConstants.kV;
-        intakeboxMotorConfig.Slot0.kA = IntakeboxConstants.kA;
-        intakeboxMotor.getConfigurator().apply(intakeboxMotorConfig);
+        SparkMaxConfig intakeboxMotorConfig = new SparkMaxConfig();
+        intakeboxMotorConfig.inverted(IntakeboxConstants.intakeboxInverted);
+        intakeboxMotorConfig.closedLoop.pid(IntakeboxConstants.kP, IntakeboxConstants.kI, IntakeboxConstants.kD);
+        intakeboxMotor.configure(intakeboxMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void setIntakeSpeed(double speed) {
