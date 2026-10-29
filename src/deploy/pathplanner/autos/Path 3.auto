@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Inicio 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Agarrar 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Agarrar 3 pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Regreso 3"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
