@@ -7,7 +7,7 @@ public class MechanismsConstants {
 
     public class IntakeConstants {
 
-        public static final int intakeId = 10;
+        public static final int intakeId = 14;
 
         public static final InvertedValue intakeInversion =
                 InvertedValue.CounterClockwise_Positive;
@@ -23,7 +23,7 @@ public class MechanismsConstants {
 
     public class IntakeboxConstants {
 
-        public static final int intakeboxId = 11;
+        public static final int intakeboxId = 13;
 
         public static final InvertedValue intakeboxInversion =
                 InvertedValue.CounterClockwise_Positive;
@@ -39,9 +39,9 @@ public class MechanismsConstants {
 
     public static final class OutakeConstants {
 
-        public static final int shooterLeftId = 22;       
-        public static final int shooterRightId = 23;
-        public static final int hoodId = 24;
+        public static final int shooterLeftId = 19;       
+        public static final int shooterRightId = 20;
+        public static final int hoodId = 11;
         public static final InvertedValue shooterLeftInversion = InvertedValue.CounterClockwise_Positive;
         public static final InvertedValue shooterRightInversion = InvertedValue.Clockwise_Positive;
         public static final InvertedValue hoodInversion = InvertedValue.CounterClockwise_Positive;
@@ -81,9 +81,8 @@ public class MechanismsConstants {
 
     public static class IndexConstants {
 
-        public static final int index_motor_id = 0;
-        public static final int roller1Id = 30;
-        public static final int roller2Id = 31;
+        public static final int roller1Id = 15;
+        public static final int roller2Id = 12;
         public static final InvertedValue rollersInversion = InvertedValue.CounterClockwise_Positive;
 
         public static final double intakeSpeed = 0.4;
